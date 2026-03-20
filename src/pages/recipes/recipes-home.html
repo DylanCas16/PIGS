@@ -2,9 +2,74 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ALIS - Create Recipe</title>
+    <link rel="stylesheet" href="recipes.css">
 </head>
 <body>
-    <h1>Hello!</h1>
+
+    <custom-header></custom-header>
+
+    <main>
+        <section class="create-recipe-container">
+            <h2>Create a new recipe</h2>
+            <p>Add the details, ingredients, and steps for your culinary masterpiece.</p>
+
+            <form id="create-recipe-form">
+                <div class="form-group">
+                    <label for="recipe-name">Recipe Name *</label>
+                    <input type="text" id="recipe-name" placeholder="e.g., Nudeln and cheese, Omelette..." required>
+                </div>
+
+                <div class="form-group form-row">
+                    <div class="half-width">
+                        <label for="prep-time">Prep Time (min)</label>
+                        <input type="number" id="prep-time" placeholder="e.g., 30" min="1">
+                    </div>
+                    <div class="half-width">
+                        <label for="portions">Servings</label>
+                        <input type="number" id="portions" placeholder="e.g., 4" min="1">
+                    </div>
+                </div>
+
+                <div class="ingredients-section">
+                    <h3>Ingredients</h3>
+                    <div id="ingredients-list">
+                        <div class="ingredient-row">
+                            <input type="text" class="ing-name" placeholder="Ingredient (e.g., Tomato)" required>
+                            <input type="number" class="ing-qty" placeholder="Qty" min="0.1" step="0.1" required>
+                            <select class="ing-unit">
+                                <option value="gr">Grams (g)</option>
+                                <option value="kg">Kilograms (kg)</option>
+                                <option value="ml">Milliliters (ml)</option>
+                                <option value="l">Liters (l)</option>
+                                <option value="ud">Units</option>
+                            </select>
+                            <div class="delete-placeholder"></div>
+                        </div>
+                    </div>
+
+                    <button type="button" id="add-ingredient-btn" class="btn-secondary">+ Add another ingredient</button>
+                </div>
+
+                <div class="form-group">
+                    <label for="recipe-process">Preparation steps *</label>
+                    <textarea id="recipe-process" rows="6"  required></textarea>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" class="btn-cancel">Cancel</button>
+                    <button type="submit" class="btn-submit">Save Recipe</button>
+                </div>
+            </form>
+        </section>
+    </main>
+
+    <custom-footer></custom-footer>
+
+    <script src="../../header/header.js"></script>
+    <script src="../../footer/footer.js"></script>
+    <script src="recipes.js"></script>
+
 </body>
 </html>
