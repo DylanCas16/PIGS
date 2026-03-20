@@ -1,27 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Alis</title>
-</head>
-<body>
-    <h1>Welcome back!</h1>
-    <h2>What should we do today?</h2>
+    <head>
+        <meta charset="UTF-8">
+        <title>Alis</title>
+        <script src="/src/header/header.js" defer></script>
+        <script src="/src/footer/footer.js" defer></script>
+    </head>
+    <body>
+        <custom-header></custom-header>
 
-    <section class="pantry section">
-        <a href="pages/pantries/pantries-home.html">Go to your supply lists</a>
-    </section>
+        <main>
+            <h1>Welcome back!</h1>
+            <h2>What should we do today?</h2>
 
-    <section class="Recipe section">
-        <a href="pages/recipes/recipes-home.html">Go to your recipes</a>
-    </section>
+            <section class="pantry section">
+                <a href="pages/pantries/pantries-home.html">Go to your supply lists</a>
+            </section>
 
-    <section class="Shopping section">
-        <a href="pages/shop/shopping-home.html">Go to your shopping lists</a>
-    </section>
+            <section class="Recipe section">
+                <a href="pages/recipes/recipes-home.html">Go to your recipes</a>
+            </section>
 
-    <section class="Expenses section">
-        <a href="pages/expenses/expenses-home.html">Check your expenses (Coming soon)</a>
-    </section>
-</body>
+            <section class="Shopping section">
+                <a href="pages/shop/shopping-home.html">Go to your shopping lists</a>
+            </section>
+
+            <section class="Expenses section">
+                <a href="pages/expenses/expenses-home.html">Check your expenses (Coming soon)</a>
+            </section>
+        </main>
+
+        <custom-footer></custom-footer>
+    </body>
 </html>
