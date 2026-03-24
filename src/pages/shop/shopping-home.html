@@ -2,9 +2,36 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping list</title>
+    <link rel="stylesheet" href="shopping-home.css">
 </head>
 <body>
-    <h1>Hello!</h1>
+    <custom-header></custom-header>
+    <main>
+        <section class="shopping-container">
+            <h2>Shopping List</h2>
+            <p>Please enter your shopping list below</p>
+            <form id="add-product-form" class="add-product-form">
+                <input type="text" id="new-product" placeholder="e.g. bread, milk..." required>
+                <input type="number" id="new-product-qty" placeholder="e.g. 1" required>
+                <button type="submit" class="btn-submit">Add Product</button>
+            </form>
+
+            <ul id="shopping-list" class="shopping-list">
+                <li class="sshopping-item">
+                    <input type="checkbox" class="check-item" title="Check">
+                    <span class="item-name">e.g: eggs</span>
+                    <input type="number" class="item-qty-edit" value="12" min="1" title="Edit quantity">
+                    <button type="button" class="btn-delete" title="Delete product">Delete</button>
+            </ul>
+        </section>
+    </main>
+    <custom-footer></custom-footer>
+
+    <script src="../../header/header.js"></script>
+    <script src="../../footer/footer.js"></script>
+    <script src="shopping-home.js"></script>
+
 </body>
 </html>

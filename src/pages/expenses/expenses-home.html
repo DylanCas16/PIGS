@@ -2,9 +2,62 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title </title>
+    <title>Expense Zone </title>
+    <link rel="stylesheet" href="expenses-home.css">
 </head>
 <body>
-  <h1>Hello!</h1>
+    <custom-header></custom-header>
+
+    <main>
+        <section class="expenses-container">
+            <h2>Expense zone</h2>
+            <p>Control your monthly expenses.</p>
+
+            <div class="summary-card">
+                <h3>Total Spent (This month)</h3>
+                <h1 id="total-amount">0.00 €</h1>
+            </div>
+
+            <form id="add-expense-form" class="add-expense-form">
+                <div class="form-row">
+                    <div class="input-group flex-2">
+                        <label for="expense-desc">Concept (e.g. Purchase Hiperdino)</label>
+                        <input type="text" id="expense-desc" required>
+                    </div>
+                    <div class="input-group flex-1">
+                        <label for="expense-cost">Import (€)</label>
+                        <input type="number" id="expense-cost" min="0.01" step="0.01" placeholder="0.00" required>
+                    </div>
+                    <div class="input-group flex-1">
+                        <label for="expense-date">Date</label>
+                        <input type="date" id="expense-date" required>
+                    </div>
+                </div>
+                <button type="submit" class="btn-submit btn-full-width">Add expenses</button>
+            </form>
+
+            <div class="expenses-history">
+                <h3>Record</h3>
+                <ul id="expenses-list" class="expenses-list">
+                    <li class="expense-item">
+                        <div class="expense-info">
+                            <span class="expense-title">E.g: Shopping Hiperdino</span>
+                            <span class="expense-date-label">24/03/2026</span>
+                        </div>
+                        <div class="expense-value">
+                            <span class="expense-money">45.50 €</span>
+                            <button type="button" class="btn-delete" title="Delete">Delete</button>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </section>
+    </main>
+
+    <custom-footer></custom-footer>
+
+    <script src="../../header/header.js"></script>
+    <script src="../../footer/footer.js"></script>
+    <script src="expenses-home.js"></script>
 </body>
 </html>
