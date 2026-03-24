@@ -25,6 +25,10 @@ find_package(Threads REQUIRED)
 include_directories(include/external)
 include_directories(${OPENSSL_INCLUDE_DIR})
 
+if(WIN32)
+    add_definitions(-D_WIN32_WINNT=0x0A00)
+endif()
+
 # 3. EJECUTABLE
 add_executable(pigs_server src/main.cpp
         include/external/httplib.h)
