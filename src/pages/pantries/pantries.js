@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const listDescInput = document.getElementById("list-desc");
     const pantriesListContainer = document.getElementById("pantries-list");
 
-    let myPantries = [];
+    let myPantries = JSON.parse(localStorage.getItem("alis_pantries")) || [];
 
     form.addEventListener("submit", (e) => {
         e.preventDefault();
@@ -16,9 +16,11 @@ document.addEventListener("DOMContentLoaded", () => {
             const newPantry = {
                 id: "pantry_" + Date.now(),
                 name: name,
-                description: desc || "No description provided."
+                description: desc || "No description provided.",
+                inventory: []
             };
             myPantries.push(newPantry);
+            localStorage.setItem("alis_pantries", JSON.stringify(myPantries));
             renderPantryCard(newPantry);
             form.reset();
             listNameInput.focus();

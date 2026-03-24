@@ -22,3 +22,5 @@ window.HiperdinoAPI = {
         return DINO_DATABASE.find(product => product.name === name) || null;
     }
 };
+
+
