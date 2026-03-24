@@ -8,3 +8,16 @@
 /dataSources.local.xml
 # Editor-based HTTP Client requests
 /httpRequests/
+# Binarios y carpetas de compilación
+build/
+bin/
+*.exe
+*.o
+*.out
+# IDEs
+.vscode/
+.idea/
+# Librerías de sistema (OpenSSL, etc)
+*.so
+*.dll
+*.dylib
