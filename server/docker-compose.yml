@@ -1,0 +1,7 @@
+services:
+  pigs_server:
+    build: .
+    container_name: pigs_server
+    ports:
+      - "8080:8080"
+    restart: unless-stopped
