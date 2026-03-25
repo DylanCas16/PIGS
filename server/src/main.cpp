@@ -40,17 +40,22 @@ int main() {
     });
 
     // GET: Obtain all the information about a single supply list
-    svr.Get("/apì/supplies/([^/]+", [](const httplib::Request& req, httplib::Response& res){
+    svr.Get("/api/supplies/([^/]+)", [](const httplib::Request& req, httplib::Response& res){
         set_cors(res);
         try {
-            auto const data = json::parse(req.body);
+            std::string const supply_id = req.matches[1];
             httplib::Client cli(FIREBASE_HOST);
             cli.enable_server_certificate_verification(false);
 
-            auto res_fb = cli.Get("/supplies/" + data + ".json");
-        } catch {
+            auto res_fb = cli.Get("/supplies/" + supply_id + ".json");
+            if (res_fb && res_fb->status == 200) {
+                res.status = 200;
+                res.set_content(res_fb->body, "application/json");
+            }
+        } catch (...){
+            res.status = 400;
+            res.set_content(R"({"error": "JSON invalid"})", "application/json");
         }
-
     });
 
     // POST: Create a new supply list
