@@ -1,9 +1,13 @@
-document.addEventListener("DOMContentLoaded", () => {
-    let allPantries = JSON.parse(localStorage.getItem("alis_pantries")) || [];
+document.addEventListener("DOMContentLoaded", async () => {
     const currentId = localStorage.getItem("currentPantryId");
-    let currentPantry = allPantries.find(p => p.id === currentId);
+    const response = await fetch("http://localhost:8080/api/supplies/" + currentId, {
+        method: "GET",
+        headers: {"Content-Type": "application/json"}
+    });
+    const data = await response.json();
+    let currentPantry = {...data, id: currentId};
 
-    if (!currentPantry) {
+    if (!currentPantry.id || !data) {
         window.location.href = "pantries-home.html";
         return;
     }
@@ -44,7 +48,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
-
     function refreshInventoryDisplay() {
         inventoryList.innerHTML = "";
 
@@ -53,7 +56,7 @@ document.addEventListener("DOMContentLoaded", () => {
             li.className = "inventory-item";
 
 
-            if(item.qty < item.limit) {
+            if (item.qty < item.limit) {
                 li.style.backgroundColor = "#fff3f3";
                 li.style.borderLeft = "4px solid #ff4c4c";
             }
@@ -75,7 +78,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             li.querySelector(".btn-minus").addEventListener("click", () => {
                 item.qty = parseFloat((item.qty - 1).toFixed(1));
-                if(item.qty < 0) item.qty = 0;
+                if (item.qty < 0) item.qty = 0;
                 saveToMemory();
                 checkAndSendToShoppingList(item);
                 refreshInventoryDisplay();
