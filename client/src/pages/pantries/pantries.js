@@ -43,7 +43,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         card.innerHTML = `
             <h3>${pantry.name}</h3>
             <p>${pantry.description}</p>
-            <button class="btn-delete" title="Delete pantry"`;
+            <button class="btn-delete" title="Delete pantry">🗑️</button>`;
 
         card.addEventListener("click", () => {
             localStorage.setItem("currentPantryId", pantry.id);
@@ -52,6 +52,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         card.querySelector(".btn-delete").addEventListener("click", (e) => {
             e.stopPropagation();
             deletePantry(pantry.id);
+            card.remove();
         });
         pantriesListContainer.appendChild(card);
     }
