@@ -1,13 +1,19 @@
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
     const form = document.getElementById("create-supply-list-form");
     const listNameInput = document.getElementById("list-name");
     const listDescInput = document.getElementById("list-desc");
     const pantriesListContainer = document.getElementById("pantries-list");
 
-    let myPantries = JSON.parse(localStorage.getItem("alis_pantries")) || [];
-    myPantries.forEach(pantry => renderPantryCard(pantry));
+    const response = await fetch("http://localhost:8080/api/supplies", {
+        method: "GET",
+        headers: {"Content-Type": "application/json"}
+    });
+    const myPantries = await response.json();
+    if (myPantries) {
+        Object.entries(myPantries).forEach(([id, data]) => renderPantryCard({...data, id: id}));
+    }
 
-    form.addEventListener("submit", (e) => {
+    form.addEventListener("submit", async (e) => {
         e.preventDefault();
 
         const name = listNameInput.value.trim();
@@ -15,14 +21,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (name) {
             const newPantry = {
-                id: "pantry_" + Date.now(),
                 name: name,
                 description: desc || "Without description.",
                 inventory: []
             };
-            myPantries.push(newPantry);
-            localStorage.setItem("alis_pantries", JSON.stringify(myPantries));
-            renderPantryCard(newPantry);
+            const response = await fetch("http://localhost:8080/api/supplies", {
+                method: "POST",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify(newPantry)
+            });
+            const data = await response.json();
+            renderPantryCard({...newPantry, id: data.name});
             form.reset();
             listNameInput.focus();
         }
@@ -34,12 +43,24 @@ document.addEventListener("DOMContentLoaded", () => {
         card.innerHTML = `
             <h3>${pantry.name}</h3>
             <p>${pantry.description}</p>
-        `;
+            <button class="btn-delete" title="Delete pantry"`;
 
         card.addEventListener("click", () => {
             localStorage.setItem("currentPantryId", pantry.id);
             window.location.href = "pantry-details.html";
         });
+        card.querySelector(".btn-delete").addEventListener("click", (e) => {
+            e.stopPropagation();
+            deletePantry(pantry.id);
+        });
         pantriesListContainer.appendChild(card);
+    }
+
+    async function deletePantry(pantryId) {
+        const response = await fetch("http://localhost:8080/api/supplies/" + pantryId, {
+            method: "DELETE",
+            headers: {"Content-Type": "application/json"}
+        })
+        return response.json();
     }
 });
