@@ -12,7 +12,7 @@
 
     <main>
         <section class="create-recipe-container">
-            <h2>Create a new recipe</h2>
+            <h2 id="form-title">Create a new recipe</h2>
             <p>Add the details, ingredients, and steps for your culinary masterpiece.</p>
 
             <form id="create-recipe-form">
@@ -34,34 +34,30 @@
 
                 <div class="ingredients-section">
                     <h3>Ingredients</h3>
-                    <div id="ingredients-list">
-                        <div class="ingredient-row">
-                            <input type="text" class="ing-name" placeholder="Ingredient (e.g., Tomato)" required>
-                            <input type="number" class="ing-qty" placeholder="Qty" min="0.1" step="0.1" required>
-                            <select class="ing-unit">
-                                <option value="gr">Grams (g)</option>
-                                <option value="kg">Kilograms (kg)</option>
-                                <option value="ml">Milliliters (ml)</option>
-                                <option value="l">Liters (l)</option>
-                                <option value="ud">Units</option>
-                            </select>
-                            <div class="delete-placeholder"></div>
-                        </div>
-                    </div>
+
+                    <datalist id="dino-ingredients-results"></datalist>
+
+                    <div id="ingredients-list"></div>
 
                     <button type="button" id="add-ingredient-btn" class="btn-secondary">+ Add another ingredient</button>
                 </div>
 
                 <div class="form-group">
                     <label for="recipe-process">Preparation steps *</label>
-                    <textarea id="recipe-process" rows="6"  required></textarea>
+                    <textarea id="recipe-process" rows="6" required></textarea>
                 </div>
 
                 <div class="form-actions">
-                    <button type="button" class="btn-cancel">Cancel</button>
-                    <button type="submit" class="btn-submit">Save Recipe</button>
+                    <button type="button" id="btn-cancel" class="btn-cancel">Cancel</button>
+                    <button type="submit" id="btn-submit" class="btn-submit">Save Recipe</button>
                 </div>
             </form>
+        </section>
+
+        <section class="my-recipes-container" style="max-width: 700px; margin: 40px auto;">
+            <h2 style="color: #2c3e50; border-bottom: 2px solid #e0e0e0; padding-bottom: 10px;">My Recipes</h2>
+            <div id="recipes-gallery" class="recipe-grid">
+                </div>
         </section>
     </main>
 
@@ -69,6 +65,7 @@
 
     <script src="../../header/header.js"></script>
     <script src="../../footer/footer.js"></script>
+    <script src="../../db/dino-mocks.js"></script>
     <script src="recipes.js"></script>
 
 </body>
