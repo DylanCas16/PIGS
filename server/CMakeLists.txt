@@ -27,6 +27,7 @@ include_directories(${OPENSSL_INCLUDE_DIR})
 
 if(WIN32)
     add_definitions(-D_WIN32_WINNT=0x0A00)
+    add_compile_options("-Wa,-mbig-obj")
 endif()
 
 # 3. EJECUTABLE
