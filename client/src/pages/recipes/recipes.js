@@ -113,9 +113,9 @@ document.addEventListener("DOMContentLoaded", () => {
             card.className = "recipe-card";
             card.innerHTML = `
                 <h3>${recipe.name}</h3>
-                <p>⏱️ Time: ${recipe.time || '?'} min</p>
-                <p>🍽️ Servings: ${recipe.portions || '?'}</p>
-                <p>🛒 Ingredients: ${recipe.ingredients.length}</p>
+                <p>Time: ${recipe.time || '?'} min</p>
+                <p>Servings: ${recipe.portions || '?'}</p>
+                <p>Ingredients: ${recipe.ingredients.length}</p>
             `;
 
             card.addEventListener("click", () => {
