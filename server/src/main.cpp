@@ -39,6 +39,20 @@ int main() {
         }
     });
 
+    // GET: Obtain all the information about a single supply list
+    svr.Get("/apì/supplies/([^/]+", [](const httplib::Request& req, httplib::Response& res){
+        set_cors(res);
+        try {
+            auto const data = json::parse(req.body);
+            httplib::Client cli(FIREBASE_HOST);
+            cli.enable_server_certificate_verification(false);
+
+            auto res_fb = cli.Get("/supplies/" + data + ".json");
+        } catch {
+        }
+
+    });
+
     // POST: Create a new supply list
     svr.Post("/api/supplies/?", [](const httplib::Request& req, httplib::Response& res) {
         set_cors(res);
