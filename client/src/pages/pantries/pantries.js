@@ -5,6 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const pantriesListContainer = document.getElementById("pantries-list");
 
     let myPantries = JSON.parse(localStorage.getItem("alis_pantries")) || [];
+    myPantries.forEach(pantry => renderPantryCard(pantry));
 
     form.addEventListener("submit", (e) => {
         e.preventDefault();
@@ -16,7 +17,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const newPantry = {
                 id: "pantry_" + Date.now(),
                 name: name,
-                description: desc || "No description provided.",
+                description: desc || "Without description.",
                 inventory: []
             };
             myPantries.push(newPantry);
@@ -30,15 +31,13 @@ document.addEventListener("DOMContentLoaded", () => {
     function renderPantryCard(pantry) {
         const card = document.createElement("div");
         card.className = "pantry-card";
-
         card.innerHTML = `
             <h3>${pantry.name}</h3>
             <p>${pantry.description}</p>
         `;
 
-
         card.addEventListener("click", () => {
-            localStorage.setItem("currentPantry", JSON.stringify(pantry));
+            localStorage.setItem("currentPantryId", pantry.id);
             window.location.href = "pantry-details.html";
         });
         pantriesListContainer.appendChild(card);

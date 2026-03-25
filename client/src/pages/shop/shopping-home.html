@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shopping list</title>
+    <title>ALIS - Shopping list</title>
     <link rel="stylesheet" href="shopping-home.css">
 </head>
 <body>
@@ -13,20 +13,14 @@
             <h2>Shopping List</h2>
             <p>Please enter your shopping list below</p>
             <form id="add-product-form" class="add-product-form">
-                <input type="text" id="new-product" placeholder="e.g. bread, milk..." required>
+                <input type="text" id="new-product" list="dino-shopping-results" placeholder="e.g. bread, milk..." required>
                 <datalist id="dino-shopping-results"></datalist>
-                <input type="number" id="new-product-qty" placeholder="e.g. 1" required>
+                <input type="number" id="new-product-qty" placeholder="e.g. 1" min="0.1" step="0.1" required>
                 <button type="submit" class="btn-submit">Add Product</button>
             </form>
 
             <ul id="shopping-list" class="shopping-list">
-                <li class="sshopping-item">
-                    <input type="checkbox" class="check-item" title="Check">
-                    <span class="item-name">e.g: eggs</span>
-                    <input type="number" class="item-qty-edit" value="12" min="1" title="Edit quantity">
-                    <button type="button" class="btn-delete" title="Delete product">Delete</button>
-                </li>
-            </ul>
+                </ul>
         </section>
     </main>
     <custom-footer></custom-footer>
