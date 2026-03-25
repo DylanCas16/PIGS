@@ -1,16 +1,29 @@
 document.addEventListener("DOMContentLoaded", async () => {
     const currentId = localStorage.getItem("currentPantryId");
+
+    if (!currentId) {
+        window.location.href = "pantries-home.html";
+        return;
+    }
+
     const response = await fetch("http://localhost:8080/api/supplies/" + currentId, {
         method: "GET",
         headers: {"Content-Type": "application/json"}
     });
     const data = await response.json();
-    let currentPantry = {...data, id: currentId};
 
-    if (!currentPantry.id || !data) {
+    if (!data) {
         window.location.href = "pantries-home.html";
         return;
     }
+
+    let currentPantry = {
+        ...data,
+        id: currentId,
+        inventory: data.items
+            ? Object.entries(data.items).map(([id, item]) => ({ ...item, id }))
+            : []
+    };
 
     document.getElementById("pantry-title").textContent = currentPantry.name;
     document.getElementById("pantry-desc").textContent = currentPantry.description;
@@ -18,20 +31,22 @@ document.addEventListener("DOMContentLoaded", async () => {
     const searchInput = document.getElementById("product-search");
     const dataList = document.getElementById("dino-results");
     const qtyInput = document.getElementById("product-qty");
-    const limitInput = document.getElementById("product-limit"); // NUEVO
+    const limitInput = document.getElementById("product-limit");
     const addBtn = document.getElementById("add-item-btn");
     const inventoryList = document.getElementById("inventory-list");
 
-    function saveToMemory() {
-        localStorage.setItem("alis_pantries", JSON.stringify(allPantries));
+    async function saveToMemory(item) {
+        await fetch("http://localhost:8080/api/supplies/" + currentId + "/items/" + item.id, {
+            method: "PUT",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify(item)
+        });
     }
 
     function checkAndSendToShoppingList(item) {
         if (item.qty < item.limit) {
             let shoppingList = JSON.parse(localStorage.getItem("alis_shopping_list")) || [];
-
             const alreadyInList = shoppingList.find(p => p.name === item.name);
-
             if (!alreadyInList) {
                 shoppingList.push({
                     name: item.name,
@@ -41,20 +56,17 @@ document.addEventListener("DOMContentLoaded", async () => {
                     isAuto: true
                 });
                 localStorage.setItem("alis_shopping_list", JSON.stringify(shoppingList));
-
                 alert(`Stock less than ${item.name}. Now its in the shopping list`);
             }
         }
     }
 
-
     function refreshInventoryDisplay() {
         inventoryList.innerHTML = "";
 
-        currentPantry.inventory.forEach((item, index) => {
+        currentPantry.inventory.forEach((item) => {
             const li = document.createElement("li");
             li.className = "inventory-item";
-
 
             if (item.qty < item.limit) {
                 li.style.backgroundColor = "#fff3f3";
@@ -63,7 +75,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
             li.innerHTML = `
                 <div>
-                    <strong>${item.name}</strong> 
+                    <strong>${item.name}</strong>
                     <span class="item-category" style="font-size: 12px; color: white; background: #2c3e50; padding: 3px 8px; border-radius: 10px; margin-left: 10px;">${item.category}</span>
                     <br><small style="color:gray;">Límite mínimo: ${item.limit}</small>
                 </div>
@@ -75,25 +87,28 @@ document.addEventListener("DOMContentLoaded", async () => {
                 </div>
             `;
 
-
-            li.querySelector(".btn-minus").addEventListener("click", () => {
-                item.qty = parseFloat((item.qty - 1).toFixed(1));
-                if (item.qty < 0) item.qty = 0;
-                saveToMemory();
-                checkAndSendToShoppingList(item);
+            li.querySelector(".btn-minus").addEventListener("click", async () => {
+                const idx = currentPantry.inventory.findIndex(i => i.id === item.id);
+                currentPantry.inventory[idx].qty = parseFloat((currentPantry.inventory[idx].qty - 1).toFixed(1));
+                if (currentPantry.inventory[idx].qty < 0) currentPantry.inventory[idx].qty = 0;
+                await saveToMemory(currentPantry.inventory[idx]);
+                checkAndSendToShoppingList(currentPantry.inventory[idx]);
                 refreshInventoryDisplay();
             });
 
-
-            li.querySelector(".btn-plus").addEventListener("click", () => {
-                item.qty = parseFloat((item.qty + 1).toFixed(1));
-                saveToMemory();
+            li.querySelector(".btn-plus").addEventListener("click", async () => {
+                const idx = currentPantry.inventory.findIndex(i => i.id === item.id);
+                currentPantry.inventory[idx].qty = parseFloat((currentPantry.inventory[idx].qty + 1).toFixed(1));
+                await saveToMemory(currentPantry.inventory[idx]);
                 refreshInventoryDisplay();
             });
 
-            li.querySelector(".btn-delete").addEventListener("click", () => {
-                currentPantry.inventory.splice(index, 1);
-                saveToMemory();
+            li.querySelector(".btn-delete").addEventListener("click", async () => {
+                await fetch("http://localhost:8080/api/supplies/" + currentId + "/items/" + item.id, {
+                    method: "DELETE",
+                    headers: {"Content-Type": "application/json"}
+                });
+                currentPantry.inventory = currentPantry.inventory.filter(i => i.id !== item.id);
                 refreshInventoryDisplay();
             });
 
@@ -117,11 +132,10 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
     if (addBtn && window.HiperdinoAPI) {
-        addBtn.addEventListener("click", () => {
+        addBtn.addEventListener("click", async () => {
             const productName = searchInput.value;
             const qty = parseFloat(qtyInput.value);
             const limit = parseFloat(limitInput.value);
-
             const product = window.HiperdinoAPI.getProductByName(productName);
 
             if (product) {
@@ -133,8 +147,13 @@ document.addEventListener("DOMContentLoaded", async () => {
                     limit: limit
                 };
 
-                currentPantry.inventory.push(newItem);
-                saveToMemory();
+                const postResponse = await fetch("http://localhost:8080/api/supplies/" + currentId + "/items/", {
+                    method: "POST",
+                    headers: {"Content-Type": "application/json"},
+                    body: JSON.stringify(newItem)
+                });
+                const postData = await postResponse.json();
+                currentPantry.inventory.push({ ...newItem, id: postData.name });
                 checkAndSendToShoppingList(newItem);
                 refreshInventoryDisplay();
 
