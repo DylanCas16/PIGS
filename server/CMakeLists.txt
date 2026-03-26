@@ -29,8 +29,18 @@ else()
 endif()
 
 include_directories(include/external)
+include_directories(src)
 
-add_executable(pigs_server src/main.cpp include/external/httplib.h)
+add_executable(pigs_server
+        src/main.cpp
+        src/helpers.cpp
+        src/routes/supplies.cpp
+        src/routes/items.cpp
+        src/routes/recipes.cpp
+        include/external/httplib.h
+)
+
+target_compile_definitions(pigs_server PRIVATE CPPHTTPLIB_OPENSSL_SUPPORT)
 
 target_link_libraries(pigs_server
         PRIVATE
