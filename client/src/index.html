@@ -1,36 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title>Alis</title>
-        <script src="/client/srcent/src/header/header.js" defer></script>
-        <script src="/client/srcent/src/footer/footer.js" defer></script>
-        <link rel="stylesheet" href="shopping-home.css">
-    </head>
-    <body>
-        <custom-header></custom-header>
+<head>
+    <meta charset="UTF-8">
+    <title>Alis</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav class="main-header">
+        <h1>ALIS</h1>
+    </nav>
 
-        <main>
-            <h1>Welcome back!</h1>
-            <h2>What should we do today?</h2>
+    <main>
+        <div class="dashboard-grid">
+            <a href="pages/pantries/pantries-home.html" class="dashboard-card card-pantry">
+                <span class="dashboard-icon"></span>
+                <span>Supply Lists</span>
+            </a>
 
-            <section class="pantry section">
-                <a href="pages/pantries/pantries-home.html">Go to your supply lists</a>
-            </section>
+            <a href="pages/recipes/recipes-home.html" class="dashboard-card card-recipe">
+                <span class="dashboard-icon"></span>
+                <span>My Recipes</span>
+            </a>
 
-            <section class="Recipe section">
-                <a href="pages/recipes/recipes-home.html">Go to your recipes</a>
-            </section>
+            <a href="pages/shop/shopping-home.html" class="dashboard-card card-shop">
+                <span class="dashboard-icon"></span>
+                <span>Shopping Lists</span>
+            </a>
 
-            <section class="Shopping section">
-                <a href="pages/shop/shopping-home.html">Go to your shopping lists</a>
-            </section>
+            <a href="pages/expenses/expenses-home.html" class="dashboard-card card-expense">
+                <span class="dashboard-icon"></span>
+                <span>Expenses <br><small style="font-weight: normal; font-size: 14px;">(Coming soon)</small></span>
+            </a>
+        </div>
+    </main>
 
-            <section class="Expenses section">
-                <a href="pages/expenses/expenses-home.html">Check your expenses (Coming soon)</a>
-            </section>
-        </main>
-
-        <custom-footer></custom-footer>
-    </body>
+    <custom-footer></custom-footer>
+    <script src="footer/footer.js"></script>
+</body>
 </html>

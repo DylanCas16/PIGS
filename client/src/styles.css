@@ -3,10 +3,76 @@ body {
     flex-direction: column;
     min-height: 100vh;
     margin: 0;
+    font-family: sans-serif, "Segoe UI";
+    background-color: #f4f7f6;
 }
-
 
 main {
     flex-grow: 1;
-    padding-bottom: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;     /
+    padding: 40px;
 }
+
+
+.main-header {
+    background-color: darkgreen;
+    color: white;
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.main-header h1 {
+    margin: 0;
+    font-size: 28px;
+    color: white;
+    letter-spacing: 2px;
+}
+
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+    max-width: 600px;
+    width: 100%;
+}
+
+.dashboard-card {
+    background-color: white;
+    border-radius: 16px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    height: 220px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    text-decoration: none;
+    color: #2c3e50;
+    font-weight: bold;
+    font-size: 18px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-top: 6px solid #ccc;
+}
+
+
+.dashboard-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+
+.dashboard-icon {
+    font-size: 55px;
+    margin-bottom: 15px;
+}
+
+.card-pantry { border-top-color: green; }
+.card-recipe { border-top-color: green; }
+.card-shop   { border-top-color: green; }
+.card-expense{ border-top-color: green; }
