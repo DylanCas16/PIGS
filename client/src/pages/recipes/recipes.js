@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
     const form = document.getElementById("create-recipe-form");
     const ingredientsList = document.getElementById("ingredients-list");
     const addIngredientBtn = document.getElementById("add-ingredient-btn");
@@ -13,10 +13,13 @@ document.addEventListener("DOMContentLoaded", () => {
     const formTitle = document.getElementById("form-title");
     const submitBtn = document.getElementById("btn-submit");
 
+    const response = await fetch("/api/recipes", {
+        method: "GET",
+        headers: {"Content-Type": "application/json"}
+    });
+    const myRecipes = await response.json();
 
-    let myRecipes = JSON.parse(localStorage.getItem("alis_recipes")) || [];
     let editingRecipeId = null;
-
 
 
     function addIngredientRow(name = "", qty = "", unit = "gr") {
@@ -69,7 +72,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     addIngredientBtn.addEventListener("click", () => addIngredientRow());
-    form.addEventListener("submit", (e) => {
+    form.addEventListener("submit", async (e) => {
         e.preventDefault();
 
         const ingredientRows = document.querySelectorAll(".ingredient-row");
@@ -92,10 +95,17 @@ document.addEventListener("DOMContentLoaded", () => {
         };
 
         if (editingRecipeId) {
-            const index = myRecipes.findIndex(r => r.id === editingRecipeId);
-            myRecipes[index] = recipeData;
+            await fetch("/api/recipes/" + editingRecipeId, {
+                method: "PUT",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify(recipeData)
+            });
         } else {
-            myRecipes.push(recipeData);
+            await fetch("/api/recipes", {
+                method: "POST",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify(recipeData)
+            });
         }
 
 
@@ -120,7 +130,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             card.addEventListener("click", () => {
                 loadRecipeIntoForm(recipe);
-                window.scrollTo({ top: 0, behavior: 'smooth' });
+                window.scrollTo({top: 0, behavior: 'smooth'});
             });
 
             recipesGallery.appendChild(card);
@@ -155,7 +165,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     cancelBtn.addEventListener("click", resetForm);
     renderGallery();
-    if(ingredientsList.children.length === 0) {
+    if (ingredientsList.children.length === 0) {
         addIngredientRow();
     }
 });
