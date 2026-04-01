@@ -22,7 +22,7 @@ void register_recipe_routes(httplib::Server& svr) {
     });
 
     //GET: Obtain a specific recipe by ID
-    svr.Get("api/recipes/([^/]+)", [](const httplib::Request& req, httplib::Response& res){
+    svr.Get(R"(/api/recipes/([^/]+))", [](const httplib::Request& req, httplib::Response& res){
         set_cors(res);
         httplib::Client cli(FIREBASE_HOST);
         cli.enable_server_certificate_verification(false);

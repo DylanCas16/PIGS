@@ -86,7 +86,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         });
 
         const recipeData = {
-            id: editingRecipeId || "recipe_" + Date.now(),
             name: nameInput.value,
             time: timeInput.value,
             portions: portionsInput.value,
@@ -108,9 +107,6 @@ document.addEventListener("DOMContentLoaded", async () => {
             });
         }
 
-
-        localStorage.setItem("alis_recipes", JSON.stringify(myRecipes));
-
         resetForm();
         renderGallery();
     });
@@ -118,14 +114,15 @@ document.addEventListener("DOMContentLoaded", async () => {
     function renderGallery() {
         recipesGallery.innerHTML = "";
 
-        myRecipes.forEach(recipe => {
+        Object.entries(myRecipes).forEach(([id, data]) => {
             const card = document.createElement("div");
+            const recipe = { ...data, id };
             card.className = "recipe-card";
             card.innerHTML = `
                 <h3>${recipe.name}</h3>
                 <p>Time: ${recipe.time || '?'} min</p>
                 <p>Servings: ${recipe.portions || '?'}</p>
-                <p>Ingredients: ${recipe.ingredients.length}</p>
+                <p>Ingredients: ${Object.keys(recipe.ingredients || {}).length}</p>
             `;
 
             card.addEventListener("click", () => {
@@ -147,7 +144,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         portionsInput.value = recipe.portions;
         processInput.value = recipe.process;
         ingredientsList.innerHTML = "";
-        recipe.ingredients.forEach(ing => {
+        Object.values(recipe.ingredients || {}).forEach(ing => {
             addIngredientRow(ing.name, ing.qty, ing.unit);
         });
     }
