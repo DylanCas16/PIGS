@@ -22,7 +22,7 @@ void register_recipe_routes(httplib::Server& svr) {
     });
 
     //GET: Obtain a specific recipe by ID
-    svr.Get("api/recipes/([^/]+)", [](const httplib::Request& req, const httplib::Response& res){
+    svr.Get("api/recipes/([^/]+)", [](const httplib::Request& req, httplib::Response& res){
         set_cors(res);
         httplib::Client cli(FIREBASE_HOST);
         cli.enable_server_certificate_verification(false);
@@ -31,9 +31,9 @@ void register_recipe_routes(httplib::Server& svr) {
         std::string const url = "/recipes/" + recipe_id + ".json";
 
         auto const res_fb = cli.Get(url);
-        if (res_fb && res_fb->body == 200) {
+        if (res_fb && res_fb->status == 200) {
             res.status = 200;
-            res.set_content(res->body, "application/json");
+            res.set_content(res_fb->body, "application/json");
         } else {
             res.status = 400;
             res.set_content(R"({"error": "Server error"})", "application/json");
