@@ -13,11 +13,11 @@ document.addEventListener("DOMContentLoaded", async () => {
     const formTitle = document.getElementById("form-title");
     const submitBtn = document.getElementById("btn-submit");
 
-    const response = await fetch("/api/recipes", {
+    const response = await fetch("http://localhost:8080/api/recipes", {
         method: "GET",
         headers: {"Content-Type": "application/json"}
     });
-    const myRecipes = await response.json();
+    const myRecipes = await response.json() || {};
 
     let editingRecipeId = null;
 
@@ -94,17 +94,20 @@ document.addEventListener("DOMContentLoaded", async () => {
         };
 
         if (editingRecipeId) {
-            await fetch("/api/recipes/" + editingRecipeId, {
+            await fetch("http://localhost:8080/api/recipes/" + editingRecipeId, {
                 method: "PUT",
                 headers: {"Content-Type": "application/json"},
                 body: JSON.stringify(recipeData)
             });
+            myRecipes[editingRecipeId] = recipeData;
         } else {
-            await fetch("/api/recipes", {
+            const responseAPI = await fetch("http://localhost:8080/api/recipes", {
                 method: "POST",
                 headers: {"Content-Type": "application/json"},
                 body: JSON.stringify(recipeData)
             });
+            const postData = await responseAPI.json();
+            myRecipes[postData.name] = recipeData;
         }
 
         resetForm();
@@ -113,6 +116,8 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     function renderGallery() {
         recipesGallery.innerHTML = "";
+
+        if (myRecipes == null) return;
 
         Object.entries(myRecipes).forEach(([id, data]) => {
             const card = document.createElement("div");
