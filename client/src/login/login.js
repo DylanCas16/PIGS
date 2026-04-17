@@ -30,7 +30,7 @@ loginBtn.addEventListener("click", () => {
             localStorage.setItem("alis_user_uid", user.uid);
             localStorage.setItem("alis_user_name", user.displayName);
 
-            window.location.href = "../../index.html";
+            window.location.href = "../index.html";
         })
         .catch((error) => {
             console.error("Error al iniciar sesión:", error.message);
