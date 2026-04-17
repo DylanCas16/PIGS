@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
     const form = document.getElementById("create-recipe-form");
     const ingredientsList = document.getElementById("ingredients-list");
     const addIngredientBtn = document.getElementById("add-ingredient-btn");
@@ -13,10 +13,13 @@ document.addEventListener("DOMContentLoaded", () => {
     const formTitle = document.getElementById("form-title");
     const submitBtn = document.getElementById("btn-submit");
 
+    const response = await fetch("http://localhost:8080/api/recipes", {
+        method: "GET",
+        headers: {"Content-Type": "application/json"}
+    });
+    const myRecipes = await response.json() || {};
 
-    let myRecipes = JSON.parse(localStorage.getItem("alis_recipes")) || [];
     let editingRecipeId = null;
-
 
 
     function addIngredientRow(name = "", qty = "", unit = "gr") {
@@ -69,7 +72,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     addIngredientBtn.addEventListener("click", () => addIngredientRow());
-    form.addEventListener("submit", (e) => {
+    form.addEventListener("submit", async (e) => {
         e.preventDefault();
 
         const ingredientRows = document.querySelectorAll(".ingredient-row");
@@ -83,7 +86,6 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 
         const recipeData = {
-            id: editingRecipeId || "recipe_" + Date.now(),
             name: nameInput.value,
             time: timeInput.value,
             portions: portionsInput.value,
@@ -92,14 +94,21 @@ document.addEventListener("DOMContentLoaded", () => {
         };
 
         if (editingRecipeId) {
-            const index = myRecipes.findIndex(r => r.id === editingRecipeId);
-            myRecipes[index] = recipeData;
+            await fetch("http://localhost:8080/api/recipes/" + editingRecipeId, {
+                method: "PUT",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify(recipeData)
+            });
+            myRecipes[editingRecipeId] = recipeData;
         } else {
-            myRecipes.push(recipeData);
+            const responseAPI = await fetch("http://localhost:8080/api/recipes", {
+                method: "POST",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify(recipeData)
+            });
+            const postData = await responseAPI.json();
+            myRecipes[postData.name] = recipeData;
         }
-
-
-        localStorage.setItem("alis_recipes", JSON.stringify(myRecipes));
 
         resetForm();
         renderGallery();
@@ -108,19 +117,22 @@ document.addEventListener("DOMContentLoaded", () => {
     function renderGallery() {
         recipesGallery.innerHTML = "";
 
-        myRecipes.forEach(recipe => {
+        if (myRecipes == null) return;
+
+        Object.entries(myRecipes).forEach(([id, data]) => {
             const card = document.createElement("div");
+            const recipe = { ...data, id };
             card.className = "recipe-card";
             card.innerHTML = `
                 <h3>${recipe.name}</h3>
                 <p>Time: ${recipe.time || '?'} min</p>
                 <p>Servings: ${recipe.portions || '?'}</p>
-                <p>Ingredients: ${recipe.ingredients.length}</p>
+                <p>Ingredients: ${Object.keys(recipe.ingredients || {}).length}</p>
             `;
 
             card.addEventListener("click", () => {
                 loadRecipeIntoForm(recipe);
-                window.scrollTo({ top: 0, behavior: 'smooth' });
+                window.scrollTo({top: 0, behavior: 'smooth'});
             });
 
             recipesGallery.appendChild(card);
@@ -137,7 +149,7 @@ document.addEventListener("DOMContentLoaded", () => {
         portionsInput.value = recipe.portions;
         processInput.value = recipe.process;
         ingredientsList.innerHTML = "";
-        recipe.ingredients.forEach(ing => {
+        Object.values(recipe.ingredients || {}).forEach(ing => {
             addIngredientRow(ing.name, ing.qty, ing.unit);
         });
     }
@@ -155,7 +167,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     cancelBtn.addEventListener("click", resetForm);
     renderGallery();
-    if(ingredientsList.children.length === 0) {
+    if (ingredientsList.children.length === 0) {
         addIngredientRow();
     }
 });
