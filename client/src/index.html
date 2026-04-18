@@ -6,35 +6,38 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <nav class="main-header">
-        <h1>ALIS</h1>
-    </nav>
+<nav class="main-header">
+    <h1>ALIS</h1>
+    <button id="btn-logout" class="btn-logout">Log out</button>
+</nav>
 
-    <main>
-        <div class="dashboard-grid">
-            <a href="pages/pantries/pantries-home.html" class="dashboard-card card-pantry">
-                <span class="dashboard-icon"></span>
-                <span>Supply Lists</span>
-            </a>
+<main>
+    <div class="dashboard-grid">
+        <a href="pages/pantries/pantries-home.html" class="dashboard-card card-pantry">
+            <span class="dashboard-icon"></span>
+            <span>Supply Lists</span>
+        </a>
 
-            <a href="pages/recipes/recipes-home.html" class="dashboard-card card-recipe">
-                <span class="dashboard-icon"></span>
-                <span>My Recipes</span>
-            </a>
+        <a href="pages/recipes/recipes-home.html" class="dashboard-card card-recipe">
+            <span class="dashboard-icon"></span>
+            <span>My Recipes</span>
+        </a>
 
-            <a href="pages/shop/shopping-home.html" class="dashboard-card card-shop">
-                <span class="dashboard-icon"></span>
-                <span>Shopping Lists</span>
-            </a>
+        <a href="pages/shop/shopping-home.html" class="dashboard-card card-shop">
+            <span class="dashboard-icon"></span>
+            <span>Shopping Lists</span>
+        </a>
 
-            <a href="pages/expenses/expenses-home.html" class="dashboard-card card-expense">
-                <span class="dashboard-icon"></span>
-                <span>Expenses <br><small style="font-weight: normal; font-size: 14px;">(Coming soon)</small></span>
-            </a>
-        </div>
-    </main>
+        <a href="pages/expenses/expenses-home.html" class="dashboard-card card-expense">
+            <span class="dashboard-icon"></span>
+            <span>Expenses <br><small style="font-weight: normal; font-size: 14px;">(Coming soon)</small></span>
+        </a>
+    </div>
+</main>
 
-    <custom-footer></custom-footer>
-    <script src="footer/footer.js"></script>
+<custom-footer></custom-footer>
+<script src="footer/footer.js"></script>
+
+<script type="module" src="index.js"></script>
 </body>
 </html>
