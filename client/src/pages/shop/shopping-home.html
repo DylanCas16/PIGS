@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ALIS - Shopping list</title>
     <link rel="stylesheet" href="shopping-home.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css">
 </head>
 <body>
     <custom-header></custom-header>
@@ -22,6 +23,42 @@
             <ul id="shopping-list" class="shopping-list">
                 </ul>
         </section>
+        <div id="map-title">Find your nearest Hiperdino</div>
+        <section id="map-section">
+            <div id="sidebar">
+                <div id="sidebar-top">
+                    <div id="logo">
+                        <div>
+                            <h1>Hiperdinos</h1>
+                            <p>Gran Canaria</p>
+                        </div>
+                    </div>
+                    <div id="search-wrap">
+                        <input id="search-input" type="text" placeholder="Busca tu calle, barrio o pueblo…" autocomplete="off">
+                        <button id="search-btn" title="Buscar">
+                            <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                        </button>
+                    </div>
+                </div>
+
+                <div id="search-result"></div>
+                <div id="search-error"></div>
+
+                <div id="stats">
+                    <div class="stat"><div class="stat-val" id="stat-total">0</div><div class="stat-lbl">tiendas</div></div>
+                    <div class="stat"><div class="stat-val" id="stat-zones">0</div><div class="stat-lbl">zonas</div></div>
+                    <div class="stat"><div class="stat-val" id="stat-nearest">—</div><div class="stat-lbl">km más cercano</div></div>
+                </div>
+
+                <div id="store-list"></div>
+            </div>
+
+            <!-- MAP -->
+            <div id="map-wrap">
+                <div id="loading"><div class="spinner"></div>Buscando…</div>
+                <div id="map"></div>
+            </div>
+        </section>
     </main>
     <custom-footer></custom-footer>
 
@@ -29,6 +66,8 @@
     <script src="../../footer/footer.js"></script>
     <script src="../../db/dino-mocks.js"></script>
     <script src="shopping-home.js"></script>
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="shopping-map.js"></script>
 
 </body>
 </html>
