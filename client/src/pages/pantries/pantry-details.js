@@ -1,18 +1,19 @@
 document.addEventListener("DOMContentLoaded", async () => {
     const currentId = localStorage.getItem("currentPantryId");
+    const userId = localStorage.getItem("alis_user_uid");
 
-    if (!currentId) {
+    if (!currentId || !userId) {
         window.location.href = "pantries-home.html";
         return;
     }
 
-    const response = await fetch("http://localhost:8080/api/supplies/" + currentId, {
+    const response = await fetch(`http://localhost:8080/api/users/${userId}/supplies/${currentId}`, {
         method: "GET",
         headers: {"Content-Type": "application/json"}
     });
     const data = await response.json();
 
-    if (!data) {
+    if (!data || data.error) {
         window.location.href = "pantries-home.html";
         return;
     }
@@ -36,7 +37,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const inventoryList = document.getElementById("inventory-list");
 
     async function saveToMemory(item) {
-        await fetch("http://localhost:8080/api/supplies/" + currentId + "/items/" + item.id, {
+        await fetch(`http://localhost:8080/api/users/${userId}/supplies/${currentId}/items/${item.id}`, {
             method: "PUT",
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify(item)
@@ -104,7 +105,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             });
 
             li.querySelector(".btn-delete").addEventListener("click", async () => {
-                await fetch("http://localhost:8080/api/supplies/" + currentId + "/items/" + item.id, {
+                await fetch(`http://localhost:8080/api/users/${userId}/supplies/${currentId}/items/${item.id}`, {
                     method: "DELETE",
                     headers: {"Content-Type": "application/json"}
                 });
@@ -147,7 +148,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                     limit: limit
                 };
 
-                const postResponse = await fetch("http://localhost:8080/api/supplies/" + currentId + "/items/", {
+                const postResponse = await fetch(`http://localhost:8080/api/users/${userId}/supplies/${currentId}/items/`, {
                     method: "POST",
                     headers: {"Content-Type": "application/json"},
                     body: JSON.stringify(newItem)

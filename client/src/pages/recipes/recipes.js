@@ -1,4 +1,12 @@
 document.addEventListener("DOMContentLoaded", async () => {
+    const userId = localStorage.getItem("alis_user_uid");
+
+    if (!userId) {
+        alert("Debes iniciar sesión para ver tus recetas.");
+        window.location.href = "../login/login.html";
+        return;
+    }
+
     const form = document.getElementById("create-recipe-form");
     const ingredientsList = document.getElementById("ingredients-list");
     const addIngredientBtn = document.getElementById("add-ingredient-btn");
@@ -13,14 +21,13 @@ document.addEventListener("DOMContentLoaded", async () => {
     const formTitle = document.getElementById("form-title");
     const submitBtn = document.getElementById("btn-submit");
 
-    const response = await fetch("http://localhost:8080/api/recipes", {
+    const response = await fetch(`http://localhost:8080/api/users/${userId}/recipes`, {
         method: "GET",
         headers: {"Content-Type": "application/json"}
     });
     const myRecipes = await response.json() || {};
 
     let editingRecipeId = null;
-
 
     function addIngredientRow(name = "", qty = "", unit = "gr") {
         const row = document.createElement("div");
@@ -70,7 +77,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         ingredientsList.appendChild(row);
     }
 
-
     addIngredientBtn.addEventListener("click", () => addIngredientRow());
     form.addEventListener("submit", async (e) => {
         e.preventDefault();
@@ -94,14 +100,14 @@ document.addEventListener("DOMContentLoaded", async () => {
         };
 
         if (editingRecipeId) {
-            await fetch("http://localhost:8080/api/recipes/" + editingRecipeId, {
+            await fetch(`http://localhost:8080/api/users/${userId}/recipes/${editingRecipeId}`, {
                 method: "PUT",
                 headers: {"Content-Type": "application/json"},
                 body: JSON.stringify(recipeData)
             });
             myRecipes[editingRecipeId] = recipeData;
         } else {
-            const responseAPI = await fetch("http://localhost:8080/api/recipes", {
+            const responseAPI = await fetch(`http://localhost:8080/api/users/${userId}/recipes`, {
                 method: "POST",
                 headers: {"Content-Type": "application/json"},
                 body: JSON.stringify(recipeData)
