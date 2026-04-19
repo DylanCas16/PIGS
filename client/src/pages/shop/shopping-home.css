@@ -10,6 +10,7 @@ body { display: flex;
 main { flex-grow: 1;
     padding: 40px 20px; }
 
+
 .shopping-container {
     max-width: 600px;
     margin: 0 auto;

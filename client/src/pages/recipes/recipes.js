@@ -78,6 +78,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
     addIngredientBtn.addEventListener("click", () => addIngredientRow());
+
     form.addEventListener("submit", async (e) => {
         e.preventDefault();
 
@@ -120,6 +121,14 @@ document.addEventListener("DOMContentLoaded", async () => {
         renderGallery();
     });
 
+    async function deleteRecipe(recipeId) {
+        const response = await fetch(`http://localhost:8080/api/users/${userId}/recipes/${recipeId}`, {
+            method: "DELETE",
+            headers: {"Content-Type": "application/json"}
+        });
+        return response.json();
+    }
+
     function renderGallery() {
         recipesGallery.innerHTML = "";
 
@@ -129,9 +138,13 @@ document.addEventListener("DOMContentLoaded", async () => {
             const card = document.createElement("div");
             const recipe = { ...data, id };
             card.className = "recipe-card";
+
             card.innerHTML = `
-                <h3>${recipe.name}</h3>
-                <p>Time: ${recipe.time || '?'} min</p>
+                <div style="display: flex; justify-content: space-between; align-items: start;">
+                    <h3 style="margin: 0;">${recipe.name}</h3>
+                    <button class="btn-delete-recipe" title="Delete recipe" style="background: none; border: none; font-size: 18px; cursor: pointer;">🗑️</button>
+                </div>
+                <p style="margin-top: 10px;">Time: ${recipe.time || '?'} min</p>
                 <p>Servings: ${recipe.portions || '?'}</p>
                 <p>Ingredients: ${Object.keys(recipe.ingredients || {}).length}</p>
             `;
@@ -139,6 +152,20 @@ document.addEventListener("DOMContentLoaded", async () => {
             card.addEventListener("click", () => {
                 loadRecipeIntoForm(recipe);
                 window.scrollTo({top: 0, behavior: 'smooth'});
+            });
+
+            const deleteBtn = card.querySelector(".btn-delete-recipe");
+            deleteBtn.addEventListener("click", async (e) => {
+                e.stopPropagation();
+                if (confirm(`Are you sure you want to delete the recipe "${recipe.name}"?`)) {
+                    await deleteRecipe(recipe.id);
+                    delete myRecipes[recipe.id];
+                    renderGallery();
+
+                    if (editingRecipeId === recipe.id) {
+                        resetForm();
+                    }
+                }
             });
 
             recipesGallery.appendChild(card);

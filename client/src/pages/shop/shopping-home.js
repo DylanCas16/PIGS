@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 </span>
                 <input type="number" class="item-qty-edit" value="${item.qty}" min="0.1" step="0.1" style="width: 60px; text-align: center;">
                 <span style="font-size: 14px; margin: 0 10px; color: #555;">${item.unit}</span>
-                <button type="button" class="btn-delete" style="cursor: pointer;">Delete</button>
+                <button type="button" class="btn-delete" style="cursor: pointer; background-color: #ff4c4c; color: white; border: none; padding: 4px 8px; border-radius: 4px;">Delete</button>
             `;
 
             li.querySelector(".check-item").addEventListener("change", (event) => {
