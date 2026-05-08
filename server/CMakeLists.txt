@@ -38,6 +38,7 @@ add_executable(pigs_server
         src/routes/items.cpp
         src/routes/recipes.cpp
         include/external/httplib.h
+        src/routes/expenses.cpp
 )
 
 target_compile_definitions(pigs_server PRIVATE CPPHTTPLIB_OPENSSL_SUPPORT)

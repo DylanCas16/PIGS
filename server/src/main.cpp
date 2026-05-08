@@ -10,6 +10,7 @@
 #include "routes/items.h"
 #include "routes/recipes.h"
 #include <iostream>
+#include "routes/expenses.h"
 
 int main() {
     httplib::Server svr;
@@ -17,6 +18,7 @@ int main() {
     register_supply_routes(svr);
     register_item_routes(svr);
     register_recipe_routes(svr);
+    register_expense_routes(svr);
 
     svr.Options(R"(/.*)", [](const httplib::Request&, httplib::Response& res) {
         set_cors(res);

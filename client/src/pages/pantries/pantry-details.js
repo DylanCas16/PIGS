@@ -78,7 +78,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 <div>
                     <strong>${item.name}</strong>
                     <span class="item-category" style="font-size: 12px; color: white; background: #2c3e50; padding: 3px 8px; border-radius: 10px; margin-left: 10px;">${item.category}</span>
-                    <br><small style="color:gray;">Límite mínimo: ${item.limit}</small>
+                    <br><small style="color:gray;">Minimum limit: ${item.limit}</small>
                 </div>
                 <div style="display: flex; align-items: center; gap: 10px;">
                     <button class="btn-minus" style="padding: 2px 8px; cursor: pointer;">-</button>
