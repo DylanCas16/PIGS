@@ -28,12 +28,12 @@ main {
 
 .create-recipe-container h2 {
     margin-top: 0;
-    color: grey;
+    color: #444444;
 }
 
 .create-recipe-container p {
     margin-top: 0;
-    color: grey;
+    color: #444444;
     font-size: 16px;
 }
 
@@ -45,7 +45,7 @@ main {
     width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; font-family: inherit;
 }
 .form-group input:focus, .form-group textarea:focus, select:focus {
-    border-color: #4CAF50; outline: none; box-shadow: 0 0 5px rgba(76, 175, 80, 0.3);
+    border-color: #2E7D32; outline: none; box-shadow: 0 0 5px rgba(46, 125, 50, 0.3);
 }
 
 
@@ -79,8 +79,8 @@ main {
 
 .btn-secondary {
     background-color: transparent;
-    color: #4CAF50;
-    border: 2px dashed #4CAF50;
+    color: #2E7D32;
+    border: 2px dashed #2E7D32;
     padding: 8px 15px;
     border-radius: 6px;
     cursor: pointer;
@@ -88,14 +88,14 @@ main {
     width: 100%;
     transition: 0.3s;
 }
-.btn-secondary:hover { background-color: #4CAF50; color: white; }
+.btn-secondary:hover { background-color: #2E7D32; color: white; }
 
 .form-actions { display: flex; justify-content: flex-end; gap: 15px; margin-top: 30px; }
 .btn-cancel, .btn-submit { padding: 10px 20px; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; transition: 0.3s; }
 .btn-cancel { background-color: #f1f1f1; color: #333; }
 .btn-cancel:hover { background-color: #e0e0e0; }
-.btn-submit { background-color: #4CAF50; color: white; }
-.btn-submit:hover { background-color: #45a049; }
+.btn-submit { background-color: #2E7D32; color: white; }
+.btn-submit:hover { background-color: #276E2B; }
 
 .btn-remove-ing {
     background-color: #ff4c4c;
@@ -124,7 +124,7 @@ main {
     padding: 20px;
     cursor: pointer;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
-    border-top: 4px solid #4CAF50;
+    border-top: 4px solid #2E7D32;
 }
 
 .recipe-card:hover {

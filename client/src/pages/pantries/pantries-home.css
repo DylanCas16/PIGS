@@ -29,11 +29,11 @@ main {
 
 .create-list-container h2 {
     margin-top: 0;
-    color: grey;
+    color: #444444;
 }
 
 .create-list-container p {
-    color: grey;
+    color: #444444;
     margin-bottom: 25px;
     font-size: 16px;
 }
@@ -61,9 +61,9 @@ main {
 
 .form-group input:focus,
 .form-group textarea:focus {
-    border-color: #4CAF50;
+    border-color: #2E7D32;
     outline: none;
-    box-shadow: 0 0 5px rgba(76, 175, 80, 0.3);
+    box-shadow: 0 0 5px rgba(46, 125, 50, 0.3);
 }
 
 .form-actions {
@@ -92,12 +92,12 @@ main {
 }
 
 .btn-submit {
-    background-color: #4CAF50;
+    background-color: #2E7D32;
     color: white;
 }
 
 .btn-submit:hover {
-    background-color: #45a049;
+    background-color: #276E2B;
 }
 
 
@@ -127,7 +127,7 @@ main {
     padding: 20px;
     cursor: pointer;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
-    border-top: 4px solid #4CAF50;
+    border-top: 4px solid #2E7D32;
 }
 
 
@@ -145,5 +145,5 @@ main {
 .pantry-card p {
     margin: 0;
     font-size: 13px;
-    color: #777;
+    color: #595959;
 }

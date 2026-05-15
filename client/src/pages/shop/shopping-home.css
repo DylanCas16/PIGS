@@ -20,8 +20,8 @@ main { flex-grow: 1;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     font-family: 'Segoe UI', sans-serif;
 }
-.shopping-container h2 { margin-top: 0; color: grey; }
-.shopping-container p { color: grey; font-size: 16px; margin-bottom: 20px; }
+.shopping-container h2 { margin-top: 0; color: #444444; }
+.shopping-container p { color: #444444; font-size: 16px; margin-bottom: 20px; }
 
 .add-product-form {
     display: flex;
@@ -30,8 +30,8 @@ main { flex-grow: 1;
 }
 .add-product-form input[type="text"] { flex-grow: 1; padding: 12px; border: 1px solid #ccc; border-radius: 6px; font-size: 16px; }
 .add-product-form input[type="number"] { width: 80px; padding: 12px; border: 1px solid #ccc; border-radius: 6px; font-size: 16px; }
-.btn-submit { background-color: #4CAF50; color: white; border: none; padding: 12px 20px; border-radius: 6px; cursor: pointer; font-weight: bold; transition: 0.3s; }
-.btn-submit:hover { background-color: #45a049; }
+.btn-submit { background-color: #2E7D32; color: white; border: none; padding: 12px 20px; border-radius: 6px; cursor: pointer; font-weight: bold; transition: 0.3s; }
+.btn-submit:hover { background-color: #276E2B; }
 
 .shopping-list { list-style: none; padding: 0; margin: 0; }
 
@@ -50,7 +50,7 @@ main { flex-grow: 1;
 
 .shopping-item.completed .item-name {
     text-decoration: line-through;
-    color: #999;
+    color: #767676;
 }
 
 .item-name { flex-grow: 1; font-size: 16px; color: #333; font-weight: 500; }
@@ -281,8 +281,10 @@ main { flex-grow: 1;
 }
 
 .store-item:hover { background: lightgreen; }
+.store-item:hover .store-type { color: #595959; }
 .store-item.active { background: lightgreen; border-left: 3px solid green; padding-left: 15px; }
-.store-item.nearest { background: #fff8e8; border-left: 3px solid orange; padding-left: 15px; }
+.store-item.active .store-type { color: #595959; }
+.store-item.nearest { background: #fff8e8; border-left: 3px solid #944D00; padding-left: 15px; }
 
 .store-dot {
     width: 8px; height: 8px;
@@ -291,7 +293,7 @@ main { flex-grow: 1;
     flex-shrink: 0;
 }
 
-.store-item.nearest .store-dot { background: orange; }
+.store-item.nearest .store-dot { background: #944D00; }
 
 .store-info { flex: 1; min-width: 0; }
 
@@ -313,7 +315,7 @@ main { flex-grow: 1;
 .dist-tag {
     font-size: 11px;
     font-family: 'DM Mono', monospace;
-    color: orange;
+    color: #944D00;
     font-weight: 500;
     white-space: nowrap;
     flex-shrink: 0;
@@ -370,8 +372,8 @@ main { flex-grow: 1;
 .popup-nearest-badge {
     display: inline-block;
     margin-top: 6px;
-    background: orange;
-    color: white;
+    background: #FFB347;
+    color: #1a1a1a;
     font-size: 11px;
     padding: 2px 8px;
     border-radius: 20px;
