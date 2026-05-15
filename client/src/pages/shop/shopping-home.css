@@ -378,3 +378,18 @@ main { flex-grow: 1;
     padding: 2px 8px;
     border-radius: 20px;
 }
+
+.skip-link {
+    position: absolute;
+    top: -40px;
+    left: 0;
+    background: #e74c3c;
+    color: white;
+    padding: 8px;
+    z-index: 100;
+    transition: top 0.3s;
+}
+
+.skip-link:focus {
+    top: 0;
+}
